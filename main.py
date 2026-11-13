@@ -2,6 +2,7 @@
 from farm import Farm
 from robot import PlanterRobot, WatererRobot
 from task import Task
+from matplotlib import pyplot as plt
 
 if __name__ == "__main__":
     farm = Farm(width=10, height=5)  # Minimum 10x5 grid[cite: 2]
