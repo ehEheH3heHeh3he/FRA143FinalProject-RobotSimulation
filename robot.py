@@ -61,6 +61,23 @@ class Robot(ABC):
         self.__current_task = None
         self.__status = "IDLE"
         self.__tasks_completed += 1
+    def recharge(self, amount: int = 25) -> None:
+        # Encapsulation: battery cannot exceed 100
+        self.__battery = min(100, self.__battery + amount)
+
+    def needs_charging(self, threshold: int = 25) -> bool:
+        return self.__battery <= threshold or self.__status == "CHARGING"
+
+    def handle_charging(self, charger_pos: tuple[int, int]) -> None:
+        self._set_status("CHARGING")
+        if self.get_position() != charger_pos:
+            self.move_one_step_toward(charger_pos)
+            # Refund the 1% movement cost so a low-battery robot never strands at 0%
+            self.recharge(1)
+        else:
+            self.recharge(25)
+            if self.get_battery() >= 100:
+                self._set_status("MOVING" if self.get_current_task() else "IDLE")
 
     @abstractmethod
     def can_handle(self, task_type: str) -> bool:
