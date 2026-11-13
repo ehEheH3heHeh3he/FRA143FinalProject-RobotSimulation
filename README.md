@@ -12,6 +12,7 @@ classDiagram
         -list~Robot~ robots
         -list~Task~ tasks
         -int timestep
+        -tuple~int,int~ charger_pos
         +__init__(width: int, height: int)
         +add_robot(robot: Robot) void
         +add_task(task: Task) void
@@ -19,6 +20,7 @@ classDiagram
         +all_tasks_done() bool
         +display_grid() void
         +print_summary() void
+        +get_charger_pos() tuple~int,int~
     }
 
     class Robot {
@@ -29,6 +31,7 @@ classDiagram
         -str status
         -Task current_task
         -int tasks_completed
+        -tuple~int,int~ charger_pos
         +__init__(name: str, pos: tuple, battery: int)
         +__del__() void
         +get_name() str
@@ -43,6 +46,10 @@ classDiagram
         +complete_current_task() void
         +can_handle(task_type: str)* bool
         +work()* void
+        +recharge(amount: int) void
+        +needs_charge(threshold: int) bool
+        +send_to_charger(charger_pos: tuple) void
+        +handle_charging() bool
     }
 
     class PlanterRobot {
