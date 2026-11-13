@@ -21,4 +21,4 @@ if __name__ == "__main__":
 
     while not farm.all_tasks_done():
         farm.step()
-    # TODO: Print final summary (total timesteps & tasks per robot)[cite: 2]
+farm.print_summary()
